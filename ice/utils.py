@@ -1,13 +1,18 @@
 import secrets
+import string
 
-_all_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 _ufrag_len = 16
 _pwd_len = 32
 
 
 def _random_string(length: int) -> str:
-    return "".join(secrets.choice(_all_chars) for _ in range(length))
+    allchar = string.ascii_letters + string.digits
+    return "".join(secrets.choice(allchar) for _ in range(length))
+
+
+def generate_tie_breaker() -> int:
+    return secrets.randbits(64)
 
 
 def generate_ufrag() -> str:
@@ -16,3 +21,10 @@ def generate_ufrag() -> str:
 
 def generate_pwd() -> str:
     return _random_string(_pwd_len)
+
+
+def cmp(x: int, y: int) -> int:
+    if x > y:
+        return 1
+    else:
+        return 0
